@@ -3,10 +3,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const addBtn = document.getElementById('add-btn');
   const fromInput = document.getElementById('from-domain');
   const toInput = document.getElementById('to-domain');
+  const toggle = document.getElementById('toggle');
 
   function loadSwaps() {
-    chrome.storage.sync.get(['swaps'], (result) => {
+    chrome.storage.sync.get(['swaps', 'isEnabled'], (result) => {
       const swaps = result.swaps || [];
+      const isEnabled = result.isEnabled !== false; // Default to true if not set
+      toggle.checked = isEnabled;
+
       swapsContainer.innerHTML = '';
       swaps.forEach((swap, index) => {
         const div = document.createElement('div');
@@ -63,6 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     }
+  });
+
+  toggle.addEventListener('change', () => {
+    const isEnabled = toggle.checked;
+    chrome.storage.sync.set({isEnabled}, () => {
+      console.log(`Domain Swapper ${isEnabled ? 'enabled' : 'disabled'}`);
+    });
   });
 
   loadSwaps();
