@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         div.className = 'swap-item';
         div.innerHTML = `
           <span>${swap.from} → ${swap.to}</span>
-          <button class="swap-btn" data-index="${index}">Swap</button>
           <button class="edit-btn" data-index="${index}">Edit</button>
           <button class="delete-btn" data-index="${index}">Delete</button>
         `;
@@ -24,23 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function addEventListeners() {
-    document.querySelectorAll('.swap-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const index = e.target.dataset.index;
-        chrome.storage.sync.get(['swaps'], (result) => {
-          const swaps = result.swaps || [];
-          const swap = swaps[index];
-          chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            const currentUrl = tabs[0].url;
-            if (currentUrl.startsWith(swap.from)) {
-              const newUrl = currentUrl.replace(swap.from, swap.to);
-              chrome.tabs.update(tabs[0].id, {url: newUrl});
-            }
-          });
-        });
-      });
-    });
-
     document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const index = e.target.dataset.index;
