@@ -3,17 +3,21 @@
 <head>
   <title>Domain Swapper</title>
   <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="toggle-container">
-    <label for="toggle">Enable Swapping:</label>
-    <input type="checkbox" id="toggle">
-  </div>
-  <div id="swaps-container"></div>
-  <div id="add-swap">
-    <input type="text" id="from-domain" placeholder="From domain">
-    <input type="text" id="to-domain" placeholder="To domain">
-    <button id="add-btn">Add Swap</button>
+  <div class="container">
+    <h1>Domain Swapper</h1>
+    <div class="toggle-container">
+      <label for="toggle">Enable Swapping</label>
+      <input type="checkbox" id="toggle">
+    </div>
+    <div id="swaps-container" class="swaps-list"></div>
+    <div id="add-swap" class="add-swap-form">
+      <input type="text" id="from-domain" placeholder="From domain (e.g., https://example.com)">
+      <input type="text" id="to-domain" placeholder="To domain (e.g., http://localhost:3000)">
+      <button id="add-btn">Add Swap</button>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>
