@@ -8,7 +8,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
       const currentUrl = tab.url;
       for (const swap of swaps) {
-        if (currentUrl.startsWith(swap.from)) {
+        if (swap.enabled && currentUrl.startsWith(swap.from)) {
           const newUrl = currentUrl.replace(swap.from, swap.to);
           chrome.tabs.update(tabId, { url: newUrl });
           break;

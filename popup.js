@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const div = document.createElement('div');
         div.className = 'swap-item';
         div.innerHTML = `
+          <input type="checkbox" class="swap-toggle" data-index="${index}" ${swap.enabled ? 'checked' : ''}>
           <span>${swap.name}</span>
           <button class="edit-btn" data-index="${index}">Edit</button>
           <button class="delete-btn" data-index="${index}">Delete</button>
@@ -28,6 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function addEventListeners() {
+    document.querySelectorAll('.swap-toggle').forEach(toggle => {
+      toggle.addEventListener('change', (e) => {
+        const index = e.target.dataset.index;
+        chrome.storage.sync.get(['swaps'], (result) => {
+          const swaps = result.swaps || [];
+          swaps[index].enabled = e.target.checked;
+          chrome.storage.sync.set({swaps}, loadSwaps);
+        });
+      });
+    });
+
     document.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const index = e.target.dataset.index;
@@ -62,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (name && from && to) {
       chrome.storage.sync.get(['swaps'], (result) => {
         const swaps = result.swaps || [];
-        swaps.push({name, from, to});
+        swaps.push({name, from, to, enabled: true});
         chrome.storage.sync.set({swaps}, () => {
           swapNameInput.value = '';
           fromInput.value = '';

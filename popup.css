@@ -28,7 +28,7 @@ h1 {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Toggle */
+/* Main Toggle */
 .toggle-container {
   display: flex;
   align-items: center;
@@ -104,6 +104,39 @@ h1 {
   color: #e0e0e0;
   margin-right: 10px;
   word-break: break-all;
+}
+
+/* Swap Toggle */
+.swap-toggle {
+  appearance: none;
+  width: 30px;
+  height: 15px;
+  background: #4a4a4a;
+  border-radius: 7px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-right: 10px;
+}
+
+.swap-toggle:checked {
+  background: #0070f3;
+}
+
+.swap-toggle::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 50%;
+  top: 1.5px;
+  left: 1.5px;
+  transition: transform 0.3s ease;
+}
+
+.swap-toggle:checked::before {
+  transform: translateX(15px);
 }
 
 /* Buttons */
