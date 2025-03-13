@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const swapsContainer = document.getElementById('swaps-container');
   const addBtn = document.getElementById('add-btn');
+  const swapNameInput = document.getElementById('swap-name');
   const fromInput = document.getElementById('from-domain');
   const toInput = document.getElementById('to-domain');
   const toggle = document.getElementById('toggle');
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function loadSwaps() {
     chrome.storage.sync.get(['swaps', 'isEnabled'], (result) => {
       const swaps = result.swaps || [];
-      const isEnabled = result.isEnabled !== false; // Default to true if not set
+      const isEnabled = result.isEnabled !== false;
       toggle.checked = isEnabled;
 
       swapsContainer.innerHTML = '';
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const div = document.createElement('div');
         div.className = 'swap-item';
         div.innerHTML = `
-          <span>${swap.from} → ${swap.to}</span>
+          <span>${swap.name}</span>
           <button class="edit-btn" data-index="${index}">Edit</button>
           <button class="delete-btn" data-index="${index}">Delete</button>
         `;
@@ -44,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.get(['swaps'], (result) => {
           const swaps = result.swaps || [];
           const swap = swaps[index];
+          swapNameInput.value = swap.name;
           fromInput.value = swap.from;
           toInput.value = swap.to;
           swaps.splice(index, 1);
@@ -54,13 +56,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   addBtn.addEventListener('click', () => {
+    const name = swapNameInput.value.trim();
     const from = fromInput.value.trim();
     const to = toInput.value.trim();
-    if (from && to) {
+    if (name && from && to) {
       chrome.storage.sync.get(['swaps'], (result) => {
         const swaps = result.swaps || [];
-        swaps.push({from, to});
+        swaps.push({name, from, to});
         chrome.storage.sync.set({swaps}, () => {
+          swapNameInput.value = '';
           fromInput.value = '';
           toInput.value = '';
           loadSwaps();
