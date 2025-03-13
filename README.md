@@ -7,6 +7,7 @@ A modern and sleek Chrome extension that allows you to automatically swap predef
 ## Features
 - Automatically swaps domains when landing on a registered "from" domain.
 - Toggle to enable or disable swapping.
+- Toggle each swap individually.
 - Add, edit, and delete domain swaps with custom names.
 - Persistent storage of swaps and toggle state.
 
