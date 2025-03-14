@@ -8,10 +8,20 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
       const currentUrl = tab.url;
       for (const swap of swaps) {
-        if (swap.enabled && currentUrl.startsWith(swap.from)) {
-          const newUrl = currentUrl.replace(swap.from, swap.to);
-          chrome.tabs.update(tabId, { url: newUrl });
-          break;
+        if (swap.enabled) {
+          if (swap.exactMatch) {
+            if (currentUrl === swap.from) {
+              const newUrl = currentUrl.replace(swap.from, swap.to);
+              chrome.tabs.update(tabId, { url: newUrl });
+              break;
+            }
+          } else {
+            if (currentUrl.includes(swap.from)) {
+              const newUrl = currentUrl.replace(swap.from, swap.to);
+              chrome.tabs.update(tabId, { url: newUrl });
+              break;
+            }
+          }
         }
       }
     });

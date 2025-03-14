@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const fromInput = document.getElementById('from-domain');
   const toInput = document.getElementById('to-domain');
   const toggle = document.getElementById('toggle');
+  const exactMatchCheckbox = document.getElementById('exact-match');
 
   function loadSwaps() {
     chrome.storage.sync.get(['swaps', 'isEnabled'], (result) => {
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
           swapNameInput.value = swap.name;
           fromInput.value = swap.from;
           toInput.value = swap.to;
+          exactMatchCheckbox.checked = swap.exactMatch || false;
           swaps.splice(index, 1);
           chrome.storage.sync.set({swaps}, loadSwaps);
         });
@@ -71,14 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const name = swapNameInput.value.trim();
     const from = fromInput.value.trim();
     const to = toInput.value.trim();
+    const exactMatch = exactMatchCheckbox.checked;
     if (name && from && to) {
       chrome.storage.sync.get(['swaps'], (result) => {
         const swaps = result.swaps || [];
-        swaps.push({name, from, to, enabled: true});
+        swaps.push({name, from, to, enabled: true, exactMatch});
         chrome.storage.sync.set({swaps}, () => {
           swapNameInput.value = '';
           fromInput.value = '';
           toInput.value = '';
+          exactMatchCheckbox.checked = false;
           loadSwaps();
         });
       });

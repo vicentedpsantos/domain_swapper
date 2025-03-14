@@ -206,12 +206,20 @@ input[type="text"]:focus {
   background: rgba(255, 255, 255, 0.15);
 }
 
+label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+}
+
+#exact-match {
+  margin-right: 5px;
+}
+
 #add-btn {
   width: 100%;
   background: #0070f3;
   color: #ffffff;
-}
-
-#add-btn:hover {
-  background: #005bb5;
 }

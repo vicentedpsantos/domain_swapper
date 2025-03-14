@@ -34,6 +34,7 @@ A modern and sleek Chrome extension that allows you to automatically swap predef
    - Enter a "Swap name" (e.g., "Checkout to Local!!").
    - Enter the "From domain" (e.g., `https://example.com`).
    - Enter the "To domain" (e.g., `http://localhost:3000`).
+   - Check "Exact match?" if you want to match the full URL (default is to determine inclusion).
    - Click "Add Swap" to save. The name will appear in the list.
 
 4. **Edit or Delete Swaps**:
