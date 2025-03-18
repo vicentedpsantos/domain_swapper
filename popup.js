@@ -7,6 +7,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggle = document.getElementById('toggle');
   const exactMatchCheckbox = document.getElementById('exact-match');
 
+  function initializeStorage() {
+    chrome.storage.sync.get(['swaps', 'isEnabled'], (result) => {
+      if (!result.swaps) {
+        chrome.storage.sync.set({ swaps: [] }, () => {
+          console.log('Initialized swaps array');
+        });
+      }
+      if (result.isEnabled === undefined) {
+        chrome.storage.sync.set({ isEnabled: true }, () => {
+          console.log('Initialized isEnabled to true');
+        });
+      }
+    });
+  }
+
   function loadSwaps() {
     chrome.storage.sync.get(['swaps', 'isEnabled'], (result) => {
       const swaps = result.swaps || [];
@@ -36,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.get(['swaps'], (result) => {
           const swaps = result.swaps || [];
           swaps[index].enabled = e.target.checked;
-          chrome.storage.sync.set({swaps}, loadSwaps);
+          chrome.storage.sync.set({ swaps }, loadSwaps);
         });
       });
     });
@@ -47,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.get(['swaps'], (result) => {
           const swaps = result.swaps || [];
           swaps.splice(index, 1);
-          chrome.storage.sync.set({swaps}, loadSwaps);
+          chrome.storage.sync.set({ swaps }, loadSwaps);
         });
       });
     });
@@ -63,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
           toInput.value = swap.to;
           exactMatchCheckbox.checked = swap.exactMatch || false;
           swaps.splice(index, 1);
-          chrome.storage.sync.set({swaps}, loadSwaps);
+          chrome.storage.sync.set({ swaps }, loadSwaps);
         });
       });
     });
@@ -77,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (name && from && to) {
       chrome.storage.sync.get(['swaps'], (result) => {
         const swaps = result.swaps || [];
-        swaps.push({name, from, to, enabled: true, exactMatch});
-        chrome.storage.sync.set({swaps}, () => {
+        swaps.push({ name, from, to, enabled: true, exactMatch });
+        chrome.storage.sync.set({ swaps }, () => {
           swapNameInput.value = '';
           fromInput.value = '';
           toInput.value = '';
@@ -91,10 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   toggle.addEventListener('change', () => {
     const isEnabled = toggle.checked;
-    chrome.storage.sync.set({isEnabled}, () => {
+    chrome.storage.sync.set({ isEnabled }, () => {
       console.log(`Domain Swapper ${isEnabled ? 'enabled' : 'disabled'}`);
     });
   });
 
+  initializeStorage();
   loadSwaps();
 });
