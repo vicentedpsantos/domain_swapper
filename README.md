@@ -37,27 +37,26 @@ Domain Swapper operates as a Chrome extension that monitors your browser navigat
 ### Load as Unpacked Extension
 
 1. **Download the Extension**
+You can either download the extension from [here](https://github.com/vicentedpsantos/domain_swapper/archive/refs/heads/main.zip), or run the following command.
    ```bash
    # Clone via Git
    git clone https://github.com/your-username/domain_swapper.git
-   
-   # OR download as ZIP and extract
    ```
 
-2. **Open Chrome Extension Management**
+3. **Open Chrome Extension Management**
    - Open Google Chrome
    - Type `chrome://extensions/` in the address bar and press Enter
    - Alternatively: Menu (⋮) → More tools → Extensions
 
-3. **Enable Developer Mode**
+4. **Enable Developer Mode**
    - Toggle the "Developer mode" switch in the top-right corner of the extensions page
 
-4. **Load the Extension**
+5. **Load the Extension**
    - Click the "Load unpacked" button that appears
    - Navigate to and select the `domain_swapper` folder (the one containing `manifest.json`)
    - The extension should now appear in your extensions list
 
-5. **Pin the Extension** (Optional but recommended)
+6. **Pin the Extension** (Optional but recommended)
    - Click the puzzle piece icon (🧩) in Chrome's toolbar
    - Find "Domain Swapper" and click the pin icon (📌)
    - The extension icon will now be visible in your toolbar
