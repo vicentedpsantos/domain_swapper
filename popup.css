@@ -223,3 +223,14 @@ label {
   background: #0070f3;
   color: #ffffff;
 }
+
+#cancel-btn {
+  width: 100%;
+  background: #ff3333;
+  color: #ffffff;
+  margin-top: 5px;
+}
+
+#cancel-btn:hover {
+  background: #cc0000;
+}
