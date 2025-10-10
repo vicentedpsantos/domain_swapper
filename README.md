@@ -40,7 +40,7 @@ Domain Swapper operates as a Chrome extension that monitors your browser navigat
 You can either download the extension from [here](https://github.com/vicentedpsantos/domain_swapper/archive/refs/heads/main.zip), or run the following command.
    ```bash
    # Clone via Git
-   git clone https://github.com/your-username/domain_swapper.git
+   git clone https://github.com/vicentedpsantos/domain_swapper.git
    ```
 
 3. **Open Chrome Extension Management**
