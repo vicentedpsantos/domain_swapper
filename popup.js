@@ -1,11 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
   const swapsContainer = document.getElementById('swaps-container');
   const addBtn = document.getElementById('add-btn');
+  const cancelBtn = document.getElementById('cancel-btn');
   const swapNameInput = document.getElementById('swap-name');
   const fromInput = document.getElementById('from-domain');
   const toInput = document.getElementById('to-domain');
   const toggle = document.getElementById('toggle');
   const exactMatchCheckbox = document.getElementById('exact-match');
+
+  let isEditing = false;
+  let editingIndex = -1;
+
+  function clearForm() {
+    swapNameInput.value = '';
+    fromInput.value = '';
+    toInput.value = '';
+    exactMatchCheckbox.checked = false;
+    isEditing = false;
+    editingIndex = -1;
+    addBtn.textContent = 'Add Swap';
+    cancelBtn.style.display = 'none';
+  }
 
   function initializeStorage() {
     chrome.storage.sync.get(['swaps', 'isEnabled'], (result) => {
@@ -69,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.edit-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        const index = e.target.dataset.index;
+        const index = parseInt(e.target.dataset.index);
         chrome.storage.sync.get(['swaps'], (result) => {
           const swaps = result.swaps || [];
           const swap = swaps[index];
@@ -77,8 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
           fromInput.value = swap.from;
           toInput.value = swap.to;
           exactMatchCheckbox.checked = swap.exactMatch || false;
-          swaps.splice(index, 1);
-          chrome.storage.sync.set({ swaps }, loadSwaps);
+          
+          isEditing = true;
+          editingIndex = index;
+          
+          addBtn.textContent = 'Update Swap';
+          cancelBtn.style.display = 'inline-block';
         });
       });
     });
@@ -92,16 +111,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (name && from && to) {
       chrome.storage.sync.get(['swaps'], (result) => {
         const swaps = result.swaps || [];
-        swaps.push({ name, from, to, enabled: true, exactMatch });
+        
+        if (isEditing && editingIndex >= 0) {
+          swaps[editingIndex] = { 
+            name, 
+            from, 
+            to, 
+            enabled: swaps[editingIndex].enabled,
+            exactMatch 
+          };
+        } else {
+          swaps.push({ name, from, to, enabled: true, exactMatch });
+        }
+        
         chrome.storage.sync.set({ swaps }, () => {
-          swapNameInput.value = '';
-          fromInput.value = '';
-          toInput.value = '';
-          exactMatchCheckbox.checked = false;
+          clearForm();
           loadSwaps();
         });
       });
     }
+  });
+
+  cancelBtn.addEventListener('click', () => {
+    clearForm();
   });
 
   toggle.addEventListener('change', () => {
