@@ -9,7 +9,8 @@
     "tabs"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
   },
   "action": {
     "default_popup": "popup.html",
@@ -17,6 +18,12 @@
       "16": "icon16.png",
       "32": "icon32.png",
       "128": "icon128.png"
+    }
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "domain-swapper@vicentedpsantos",
+      "strict_min_version": "128.0"
     }
   }
 }

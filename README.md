@@ -1,12 +1,12 @@
-# Domain Swapper Chrome Extension
+# Domain Swapper Browser Extension
 
-A powerful Chrome extension that automatically redirects URLs from one domain to another based on your custom rules. Perfect for developers who need to seamlessly switch between production, staging, and local development environments without manually editing URLs.
+A powerful browser extension for Chrome and Firefox that automatically redirects URLs from one domain to another based on your custom rules. Perfect for developers who need to seamlessly switch between production, staging, and local development environments without manually editing URLs.
 
 ![Domain Swapper Screenshot](./domain-swapper-screenshot.png)
 
 ## How It Works
 
-Domain Swapper operates as a Chrome extension that monitors your browser navigation and automatically redirects URLs based on your configured rules. Here's the technical flow:
+Domain Swapper operates as a browser extension that monitors your browser navigation and automatically redirects URLs based on your configured rules. Here's the technical flow:
 
 1. **Background Service Worker**: A persistent background script monitors all tab updates in your browser
 2. **URL Matching**: When you navigate to any URL, the extension checks if it matches any of your configured "from" domains
@@ -34,7 +34,7 @@ Domain Swapper operates as a Chrome extension that monitors your browser navigat
 
 ## Installation Guide
 
-### Load as Unpacked Extension
+### Chrome
 
 1. **Download the Extension**
 You can either download the extension from [here](https://github.com/vicentedpsantos/domain_swapper/archive/refs/heads/main.zip), or run the following command.
@@ -60,6 +60,22 @@ You can either download the extension from [here](https://github.com/vicentedpsa
    - Click the puzzle piece icon (🧩) in Chrome's toolbar
    - Find "Domain Swapper" and click the pin icon (📌)
    - The extension icon will now be visible in your toolbar
+
+### Firefox (v128+)
+
+1. **Download the Extension**
+   Same as above — clone or download the repository.
+
+2. **Open Firefox Debugging Page**
+   - Type `about:debugging` in the address bar and press Enter
+   - Click "This Firefox" in the left sidebar
+
+3. **Load the Extension**
+   - Click "Load Temporary Add-on..."
+   - Navigate to the `domain_swapper` folder and select `manifest.json`
+   - The extension will appear in your toolbar
+
+> **Note:** Temporary add-ons are removed when Firefox is closed. For permanent installation, the extension would need to be signed and distributed through [addons.mozilla.org](https://addons.mozilla.org).
 
 ## Usage Guide
 
